@@ -1,5 +1,5 @@
 resource "kubernetes_cluster_role" "lb_controller_role" {
-  depends_on = [aws_eks_cluster.lead_api_cluster]
+  depends_on = [aws_eks_cluster.cluster]
   metadata {
     labels = {
       "app.kubernetes.io/name" = "aws-load-balancer-controller"

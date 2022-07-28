@@ -1,5 +1,5 @@
 resource "kubernetes_deployment" "lb_controller_deploy" {
-  depends_on = [aws_eks_cluster.lead_api_cluster]
+  depends_on = [aws_eks_cluster.cluster]
   metadata {
     annotations      = {
       "meta.helm.sh/release-name"         = "aws-load-balancer-controller"
@@ -37,8 +37,8 @@ resource "kubernetes_deployment" "lb_controller_deploy" {
       }
       spec {
         container {
-          args  = ["--cluster-name=lead-api-cluster","--ingress-class=alb","--aws-vpc-id=${aws_vpc.main.id}","--aws-region=${data.aws_region.current.name}"]
-          image = "602401143452.dkr.ecr.us-west-2.amazonaws.com/amazon/aws-load-balancer-controller:v2.4.2"
+          args  = ["--cluster-name=${var.cluster_name}-cluster","--ingress-class=alb","--aws-vpc-id=${aws_vpc.main.id}","--aws-region=${data.aws_region.current.name}"]
+          image = "602401143452.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/amazon/aws-load-balancer-controller:v2.4.2"
           name  = "controller"
           liveness_probe {
             failure_threshold = 2

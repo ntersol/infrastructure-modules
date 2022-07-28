@@ -1,5 +1,5 @@
 resource "kubernetes_mutating_webhook_configuration_v1" "lb_webhook" {
-  depends_on = [aws_eks_cluster.lead_api_cluster]
+  depends_on = [aws_eks_cluster.cluster]
   metadata {
     annotations = {
       "cert-manager.io/inject-ca-from" = "kube-system/aws-load-balancer-serving-cert"

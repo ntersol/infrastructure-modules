@@ -1,10 +1,10 @@
-resource "aws_ecs_task_definition" "leads_api_task" {
-  family = "leads-api-task"
+resource "aws_ecs_task_definition" "task" {
+  family = "${var.cluster_name}-task"
   requires_compatibilities = ["FARGATE"]  
   container_definitions = jsonencode([
     {
-      name      = "lead-api"
-      image     = "016871311872.dkr.ecr.us-west-2.amazonaws.com/ntersol-leads-api:latest"
+      name      = ${var.cluster_name}
+      image     = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/${var.cluster_name}:latest"
       portMappings = [
         {
           containerPort = "${var.api_port}"
@@ -15,9 +15,9 @@ resource "aws_ecs_task_definition" "leads_api_task" {
         logDriver = "awslogs"
         options   = {
           awslogs-create-group  = "true"
-          awslogs-group         = "/ecs/leads-api-cluster"
-          awslogs-region        = "us-west-2"
-          awslogs-stream-prefix = "leads-api"
+          awslogs-group         = "/ecs/${var.cluster_name}-cluster"
+          awslogs-region        = "${data.aws_region.current.name}"
+          awslogs-stream-prefix = "${var.cluster_name}"
         }
       }
     }
@@ -26,8 +26,8 @@ resource "aws_ecs_task_definition" "leads_api_task" {
   memory             = 2048
   cpu                = 1024
   network_mode       = "awsvpc"
-  execution_role_arn = "arn:aws:iam::016871311872:role/ecsTaskExecutionRole"
-  task_role_arn      = "arn:aws:iam::016871311872:role/ecsTaskExecutionRole"
+  execution_role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/ecsTaskExecutionRole"
+  task_role_arn      = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/ecsTaskExecutionRole"
 
   runtime_platform {
     operating_system_family = "LINUX"

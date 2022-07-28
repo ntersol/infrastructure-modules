@@ -1,5 +1,5 @@
 resource "kubernetes_manifest" "target_group_binds" {
-  depends_on = [aws_eks_cluster.lead_api_cluster]
+  depends_on = [aws_eks_cluster.cluster]
   manifest = yamldecode(<<EOT
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition

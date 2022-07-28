@@ -1,5 +1,5 @@
 resource "kubernetes_role" "lb_cont_leader_elect_role" {
-  depends_on = [aws_eks_cluster.lead_api_cluster]
+  depends_on = [aws_eks_cluster.cluster]
   metadata {
     annotations      = {
       "meta.helm.sh/release-name"      = "aws-load-balancer-controller"

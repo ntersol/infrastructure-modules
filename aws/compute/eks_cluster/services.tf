@@ -1,7 +1,7 @@
-resource "kubernetes_service" "leads-api-service" {
-  depends_on = [aws_eks_cluster.lead_api_cluster]
+resource "kubernetes_service" "service" {
+  depends_on = [aws_eks_cluster.cluster]
   metadata {
-    name = "leads-api-service"
+    name = var.selector_label
   }
   wait_for_load_balancer = false    
 
@@ -20,10 +20,10 @@ resource "kubernetes_service" "leads-api-service" {
   }
 }
 
-resource "kubernetes_service" "leads-ui-service" {
+resource "kubernetes_service" "service" {
   
   metadata {
-    name = "leads-ui-service"
+    name = "${var.selector_label}-service"
   }
   wait_for_load_balancer = false    
 
@@ -40,9 +40,4 @@ resource "kubernetes_service" "leads-ui-service" {
 
     type = "NodePort"
   }
-}
-
-variable "selector_label" {
-  default = "leads-api"
-  type    = string
 }

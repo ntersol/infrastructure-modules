@@ -1,4 +1,5 @@
 resource "kubernetes_service" "lb-webhook-service" {
+  depends_on = [aws_eks_cluster.cluster]
   metadata {
     annotations      = {
     "meta.helm.sh/release-name"      = "aws-load-balancer-controller"

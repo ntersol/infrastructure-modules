@@ -1,5 +1,5 @@
 resource "kubernetes_validating_webhook_configuration_v1" "lb-webhook" {
-  depends_on = [aws_eks_cluster.lead_api_cluster]
+  depends_on = [aws_eks_cluster.cluster]
 
   metadata {
     annotations = {
