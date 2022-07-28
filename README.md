@@ -7,6 +7,6 @@ This repository is being created to house re-usable IaC modules for all cloud pr
 
 Put whatever module you create in the appropriate cloud provider directory, then inside a thematically-appropriate area.
 
-Make sure you follow Ntersol's Git Best Practices, including creating branches and PRs for all changes.
+Please make sure you follow Git Best Practices, including creating branches and PRs for all changes.
 
 Note that there is no "dev" branch to this repository, since none of the code is meant to be used directly.
