@@ -2,7 +2,6 @@ resource "aws_security_group" "pub_sg" {
   vpc_id      = var.vpc
 
   ingress {
-    description      = "API traffic"
     from_port        = 443
     to_port          = 443
     protocol         = "tcp"
