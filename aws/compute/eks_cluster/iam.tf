@@ -1,5 +1,5 @@
 resource "aws_iam_role" "fargate_role" {
-  name = "lead_api_fargate_role"
+  name = "app_fargate_role"
 
   assume_role_policy = jsonencode({
     Statement = [{
@@ -19,7 +19,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSFargatePodExecutionRolePolic
 }
 
 resource "aws_iam_role" "eks_role" {
-  name = "lead_api_cluster_role"
+  name = "app_cluster_role"
 
   assume_role_policy = <<POLICY
 {

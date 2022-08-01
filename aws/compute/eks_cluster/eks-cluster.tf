@@ -1,5 +1,5 @@
-resource "aws_eks_cluster" "lead_api_cluster" {
-  name     = "lead-api-cluster"
+resource "aws_eks_cluster" "cluster" {
+  name     = "${var.name}-cluster"
   role_arn = aws_iam_role.eks_role.arn
 
   vpc_config {
