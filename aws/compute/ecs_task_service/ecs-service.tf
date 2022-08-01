@@ -5,11 +5,13 @@ resource "aws_ecs_service" "service" {
   desired_count          = 2
   launch_type            = "FARGATE"
   enable_execute_command = true
-  load_balancer {
-    target_group_arn = aws_lb_target_group.tg.arn
-    container_name   = var.name
-    container_port   = var.api_port
-  } 
+  
+  for i in len(var.target_groups) :
+    load_balancer {
+      target_group_arn = var.target_groups[i]
+      container_name   = var.name
+      container_port   = var.ports[i]
+    }
 
   network_configuration {
     subnets         = var.subnets
