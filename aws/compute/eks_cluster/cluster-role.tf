@@ -1,5 +1,5 @@
 resource "kubernetes_cluster_role" "alb_ingress_controller" {
-  depends_on = [aws_eks_cluster.lead_api_cluster]
+  depends_on = [aws_eks_cluster.cluster]
   metadata {
     labels = {
       "app.kubernetes.io/name" = "alb-ingress-controller"
@@ -21,7 +21,7 @@ resource "kubernetes_cluster_role" "alb_ingress_controller" {
 }
 
 resource "kubernetes_cluster_role_binding" "alb_ingress_controller_binding" {
-  depends_on = [aws_eks_cluster.lead_api_cluster]
+  depends_on = [aws_eks_cluster.cluster]
   metadata {
     labels = {
       "app.kubernetes.io/name" = "alb-ingress-controller"
