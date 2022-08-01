@@ -3,7 +3,7 @@ resource "aws_eks_cluster" "cluster" {
   role_arn = aws_iam_role.eks_role.arn
 
   vpc_config {
-    subnet_ids = [aws_subnet.private[0].id,aws_subnet.private[1].id]
+    subnet_ids = var.subnets
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
@@ -18,5 +18,9 @@ resource "aws_eks_cluster" "cluster" {
 
   tags_all = {
     "alpha.eksctl.io/cluster-oidc-enabled" = true
+  }
+
+  provisioner "local-exec" {
+    command = "aws eks update-kubeconfig --region ${data.aws_region.current.name} --name ${this.name}"
   }
 }
