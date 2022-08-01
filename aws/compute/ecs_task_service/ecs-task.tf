@@ -3,12 +3,12 @@ resource "aws_ecs_task_definition" "task" {
   requires_compatibilities = ["FARGATE"]  
   container_definitions = jsonencode([
     {
-      name      = ${var.cluster_name}
+      name      = var.cluster_name
       image     = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/${var.cluster_name}:latest"
-      portMappings = [
+      portMappings = [ for port in var.ports :
         {
-          containerPort = "${var.api_port}"
-          hostPort      = "${var.api_port}"
+          containerPort = port
+          hostPort      = port
         }
       ]
       logConfiguration = {
@@ -16,8 +16,8 @@ resource "aws_ecs_task_definition" "task" {
         options   = {
           awslogs-create-group  = "true"
           awslogs-group         = "/ecs/${var.cluster_name}-cluster"
-          awslogs-region        = "${data.aws_region.current.name}"
-          awslogs-stream-prefix = "${var.cluster_name}"
+          awslogs-region        = data.aws_region.current.name
+          awslogs-stream-prefix = var.cluster_name
         }
       }
     }

@@ -25,8 +25,8 @@ variable "container_count" {
     default = 2
 }
 
-variable "port" {
-    type = number
+variable "ports" {
+    type = list(number)
 }
 
 data "aws_caller_identity" "current" {}
